@@ -20,49 +20,47 @@ import com.codoid.products.exception.FilloException;
 import com.codoid.products.fillo.Recordset;
 
 public class BaseSuite {
-	
-	public static ExtentReports report ;
-	public static ExtentSparkReporter spark ;
-	public static ExtentTest test ;
-	String timestamp =new SimpleDateFormat("_dd.MMM.yy_HH.mm z").format(new Date());
-	static String excelFilePath = System.getProperty("user.dir")+"\\DataFolder\\TestingData.xlsx";
-    static String sheetName = "Excel";
-	static String Column="FasTag";
-	public Recordset data ;
 
-	
+	public static ExtentReports report;
+	public static ExtentSparkReporter spark;
+	public static ExtentTest test;
+	String timestamp = new SimpleDateFormat("_dd.MMM.yy_HH.mm z").format(new Date());
+	static String excelFilePath = System.getProperty("user.dir") + "\\DataFolder\\TestingData.xlsx";
+	static String sheetName = "Excel";
+	static String Column = "Aks";
+	public Recordset data;
+
 	@BeforeSuite
-	@Parameters({"browser" ,"Column" })
-	public void Launch(@Optional String browser ,String Column ) throws FilloException {
+	@Parameters({ "browser", "Column" })
+	public void Launch(@Optional String browser, String Column) throws FilloException {
 		BrowserManager.LaunchBrowser(browser);
-		data=ExcelReadAndWrite.ReadExcelData(excelFilePath, sheetName, Column);
-	    data.next();
+		data = ExcelReadAndWrite.ReadExcelData(excelFilePath, sheetName, Column);
+		data.next();
 	}
-	
+
 	@BeforeSuite
 	public void Report() {
-		  report=new com.aventstack.extentreports.ExtentReports();
-				
-		  spark=new ExtentSparkReporter(new File("./ExtentReports/AutomationReport_FASTag" + timestamp + ".html"))
-				  .viewConfigurer().viewOrder()
-				  .as(new ViewName[] { ViewName.DASHBOARD, ViewName.TEST, ViewName.CATEGORY}).apply();
+		report = new com.aventstack.extentreports.ExtentReports();
+
+		spark = new ExtentSparkReporter(new File("./ExtentReports/AutomationReport_Aks" + timestamp + ".html"))
+				.viewConfigurer().viewOrder()
+				.as(new ViewName[] { ViewName.DASHBOARD, ViewName.TEST, ViewName.CATEGORY }).apply();
 //		  test = report.createTest("");
-		  spark.config().setTheme(Theme.DARK);
-		  spark.config().setDocumentTitle("Automation Testing");
-		  spark.config().setReportName("Face_Book Testing");
-		  report.setSystemInfo("Company Name", "FaceBook_Company");
-		  report.setSystemInfo("Tester Name", "Guna");
-		  report.attachReporter(spark);
-		  		
+		spark.config().setTheme(Theme.DARK);
+		spark.config().setDocumentTitle("Automation Testing");
+		spark.config().setReportName("Face_Book Testing");
+		report.setSystemInfo("Company Name", "FaceBook_Company");
+		report.setSystemInfo("Tester Name", "Guna");
+		report.attachReporter(spark);
+
 	}
-	
-	
+
 	@AfterSuite
 	public void tearDown() {
 		BrowserManager.CloseBrowser();
 		report.flush();
 //		Desktop.getDesktop().browse(new File("ExtentReports/Automation_Report" + timestamp + ".html").toURI());
-		
+
 	}
 
 }

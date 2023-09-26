@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
-  <parameter name="Column" value="FasTag"/>
+  <parameter name="Column" value="Aks"/>
   <parameter name="browser" value="CHROME"/>
   <test thread-count="5" name="Test(failed)">
     <classes>
       <class name="com.TestScripts.FaceBookTest">
         <methods>
+          <include name="Test"/>
           <include name="tearDown"/>
           <include name="Launch"/>
           <include name="Report"/>
